@@ -10,7 +10,6 @@
         data() {
             return {
                 data: {},
-                id: 0,
                 title: '',
                 description: '',
                 price: 0,
@@ -27,12 +26,11 @@
             async getData() {
                 this.loading = true
                 try {
-                    const res = await fetch(`https://dummyjson.com/products/${id}`)
+                    const res = await fetch(`https://dummyjson.com/products/${this.id}`)
                     if (!res.ok) throw Error('get data failed!')
                     const data = await res.json()
                     this.data = data
-                    
-                    this.id = data.id
+
                     this.title = data.title
                     this.description = data.description
                     this.price = data.price
