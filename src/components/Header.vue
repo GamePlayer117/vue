@@ -5,7 +5,15 @@
     export default {
         data() {
             return {
-                cartLogo, searchLogo
+                cartLogo, searchLogo, searchVal: ''
+            }
+        },
+        methods: {
+            onSearch() {
+                this.$router.push({
+                    name: 'Home',
+                    query: {q: this.searchVal}
+                })
             }
         }
     }
@@ -25,10 +33,11 @@
         </nav>
         <!-- Search bar -->
         <div>
-            <input placeholder="Search" class="bg-gray-600 border-solid border-[2px] border-black rounded-[5px] pl-[2px]">
+            <input @input="onSearch" v-model="searchVal" placeholder="Search" class="bg-gray-600 border-solid border-[2px] border-black rounded-[5px] pl-[2px]">
             <img :src="searchLogo" alt="Search logo" class="inline">
         </div>
     </div>
 </template>
 
+<style scoped></style>
 <style scoped></style>
