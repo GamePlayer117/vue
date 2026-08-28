@@ -7,14 +7,30 @@
                 skip : 0,
                 total : 0,
                 loading : false,
-                error : null
+                error : null,
+                timer : null,
+            }
+        },
+        computed : {
+            keyword() {
+                return this.$route.query.q || ''
+            }
+        },
+        watch : {
+            keyword : {
+                immediate : true,
+                handler() {
+                    this.debounceFetch()
+                }
             }
         },
         methods : {
             async getData() {
                 this.loading = true
+                const query = this.keyword.trim()
                 try {
-                    const res = await fetch('https://dummyjson.com/products')
+                    const url = query ? `https://dummyjson.com/products/search?q=${query}` : 'https://dummyjson.com/products'
+                    const res = await fetch(url)
                     if (! res.ok) throw Error('Get data failed!')
                     const data = await res.json()
                     this.limit = data.limit
@@ -27,6 +43,10 @@
                 } finally {
                     this.loading = false
                 }
+            },
+            debounceFetch() {
+                clearTimeout(this.timer)
+                this.timer = setTimeout(()=>{this.getData()}, 400)
             }
         },
         mounted() {
