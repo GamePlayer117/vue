@@ -1,12 +1,6 @@
-<script setup>
-    import {useRoute} from 'vue-router'
-    const route = useRoute()
-    console.log(route)
-    const id = route.params.id
-</script>
-
 <script>
     export default {
+        props: ['id'],
         data() {
             return {
                 data: {},
